@@ -1,0 +1,45 @@
+<!-- En buscar_socio.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generar Certificado de Residencia</title>
+  <!-- Al comienzo de tu plantilla HTML -->
+  {% load static %}
+
+  <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body>
+
+  <h1>Buscar Socio</h1>
+
+  <form action="{% url 'buscar_socio' %}" method="post">
+    {% csrf_token %}
+    <label for="rut_busqueda">Ingresar rut del socio:</label>
+    <input type="text" name="rut_busqueda" id="rut_busqueda" required>
+    <button type="submit">Buscar</button>
+  </form>
+
+  {% if certificado_data.nombre %}
+    <!-- En certificado_residencia.html -->
+
+
+<div id="certificado">
+  <h2>Certificado de Residencia</h2>
+  <p>La Junta de Vecinos, <strong>Vecinos en RED</strong>, Rut 66.133.911-6 de la comuna de Coquimbo.</p>
+  <p>Certifica que Señor(a): <strong>{{ certificado_data.nombre }} {{ certificado_data.apellido }}</strong>, Rut: <strong>{{ certificado_data.rut }}</strong></p>
+  <p>Reside en la siguiente dirección: <strong>{{ certificado_data.direccion }}</strong></p>
+  <p>Este certificado tiene una validez de tres meses a partir de la fecha de emisión.</p>
+  <p class="firma">Vladimir Putin</p>
+  <p>Presidente de Vecinos en RED</p>
+</div>
+
+  {% endif %}
+
+  {% if mensaje_error %}
+    <p id="error-message">{{ mensaje_error }}</p>
+  {% endif %}
+
+</body>
+</html>
